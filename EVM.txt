@@ -1,0 +1,26 @@
+`timescale 1ns/1ps
+module EVM #(parameter COUNT_SIZE=4) (
+ input clk,
+ input reset,
+ input [1:0] vote,
+ output reg [COUNT_SIZE-1:0] countESP,
+ output reg [COUNT_SIZE-1:0] countAURD,
+ output reg [COUNT_SIZE-1:0] countRASP,
+ output reg [COUNT_SIZE-1:0] countNOTA
+);
+ always @ (posedge clk) begin
+ if (reset) begin
+ countESP <= 0;
+ countAURD <= 0;
+ countRASP <= 0;
+ countNOTA <= 0;
+ end else begin
+ case (vote)
+ 2'b00: countNOTA <= countNOTA + 1;
+ 2'b01: countAURD <= countAURD + 1;
+ 2'b10: countRASP <= countRASP + 1;
+ 2'b11: countESP <= countESP + 1;
+ endcase
+ end
+ end
+endmodule

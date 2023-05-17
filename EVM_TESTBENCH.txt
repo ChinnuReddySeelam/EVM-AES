@@ -1,0 +1,38 @@
+module tb_EVM #(parameter COUNT_SIZE = 4) ;
+ reg clk = 0;
+ reg reset = 0;
+ reg [1:0] vote = 2'b00;
+ wire [COUNT_SIZE-1:0] countESP;
+ wire [COUNT_SIZE-1:0] countAURD;
+ wire [COUNT_SIZE-1:0] countRASP;
+ wire [COUNT_SIZE-1:0] countNOTA;
+ EVM #(COUNT_SIZE) dut (
+ .clk(clk),
+ .reset(reset),
+ .vote(vote),
+ .countESP(countESP),
+ .countAURD(countAURD),
+ .countRASP(countRASP),
+ .countNOTA(countNOTA)
+ );
+initial begin
+ #20 reset = 1;
+ #20 reset = 0;
+ end
+ initial begin
+ $dumpfile("File.vcd");
+ $dumpvars(0);
+ end
+always #10 clk = ~clk;
+initial begin
+ #40 vote = 2'b01;
+ #40 vote = 2'b10;
+ #40 vote = 2'b00;
+ #40 vote = 2'b00;
+ #40 vote = 2'b10;
+ #40 vote = 2'b00;
+ #40 vote = 2'b10;
+ #40 vote = 2'b11;
+ #40 $finish();
+ end
+endmodule

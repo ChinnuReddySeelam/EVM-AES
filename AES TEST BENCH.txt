@@ -1,0 +1,40 @@
+module AES_tb;
+  reg [127:0] key, data_in;
+  wire [127:0] data_out;
+
+  // Instantiate the AES module
+  AES uut (.key(key), .data_in(data_in), .data_out(data_out));
+
+  // Clock generation
+  reg clk;
+  always #5 clk = ~clk;
+
+  // Test stimulus
+  initial begin
+    clk = 0;
+    key = 128'h00112233445566778899aabbccddeeff; // Set your desired key value
+    data_in = 128'h00112233445566778899aabbccddeeff; // Set your desired input data value
+
+    // Wait for a few clock cycles before applying inputs
+    #10;
+
+    // Display initial values
+    $display("Initial Key: %h", key);
+    $display("Initial Data In: %h", data_in);
+
+    // Apply inputs and wait for a few clock cycles
+    #10;
+    // Set your desired input values for each round
+    // ...
+
+    // Display final output
+    $display("Final Data Out: %h", data_out);
+
+    // End simulation
+    $finish;
+  end
+
+  // Toggle clock
+  always #5 clk = ~clk;
+
+endmodule

@@ -1,0 +1,42 @@
+module AES ( input [127:0] key,D);
+input [127:0] data_in,
+output reg [127:0] data_out
+// SubBytes lookup table
+reg [7:0] sbox [255:0];
+initial begin
+sbox[0] = 0x63; sbox[1] = 0x7c; sbox[2] = 0x77; sbox[3] = 0x7b;
+// ... fill in the rest of the S-Box values...
+end
+// Key expansion
+reg [127:0] round_keys [0:10];
+initial begin
+round_keys[0] = key;
+// ... fill in the rest of the round key values...
+end
+// AddRoundKey operation reg [127:0] state;
+always @* begin
+state = data_in ^ round_keys[0];
+end
+// AES rounds
+integer round;
+always @* begin
+for (round = 1; round < 10; round round + 1) begin
+// SubBytes operation
+state[7:0] = sbox[state[7:0]];
+// ... fill in the rest of the SubBytes values... // ShiftRows operation
+//... fill in ShiftRows logic...
+// MixColumns operation
+//... fill in MixColumns logic...
+// AddRoundKey operation
+state = state ^ round_keys[round];
+end
+// Final round
+// SubBytes operation
+// ... fill in the final SubBytes values ...
+// ShiftRows operation
+// ... fill in final ShiftRows logic...
+// AddRoundKey operation
+state = state^ round_keys[10];
+end
+assign data_out = state;
+endmodule
